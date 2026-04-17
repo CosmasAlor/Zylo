@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+:root {
+  /* Dental Clinic – Teal / Mint palette */
+  --background: oklch(0.988 0.004 195);
+  --foreground: oklch(0.16 0.018 210);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.16 0.018 210);
+  --primary: oklch(0.42 0.14 196);       /* deep teal */
+  --primary-foreground: oklch(0.99 0.004 195);
+  --secondary: oklch(0.93 0.025 190);
+  --secondary-foreground: oklch(0.28 0.06 196);
+  --muted: oklch(0.94 0.01 195);
+  --muted-foreground: oklch(0.48 0.025 210);
+  --accent: oklch(0.62 0.17 177);        /* vivid mint */
+  --accent-foreground: oklch(0.15 0.04 196);
+  --destructive: oklch(0.58 0.24 28);
+  --destructive-foreground: oklch(0.97 0.01 25);
+  --border: oklch(0.88 0.015 195);
+  --input: oklch(0.88 0.015 195);
+  --ring: oklch(0.62 0.17 177);
+  --radius: 0.9rem;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 100;
+  border-radius: 0.5rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
+}
+
+.container-app {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1280px;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-app {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-app {
+    padding-inline: 2rem;
+  }
+}

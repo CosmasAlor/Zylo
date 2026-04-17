@@ -1,0 +1,195 @@
+PROJECT EXECUTION PLAN — Zylo Dental Clinic Platform
+
+Follow this build plan sequentially.
+Complete one task at a time.
+Do NOT skip phases.
+Do NOT implement future phases unless explicitly requested.
+Maintain production-grade architecture and code quality throughout.
+
+==================================================
+PHASE 1 — PROJECT FOUNDATION
+==================================================
+
+Task 1.1
+Initialize project with:
+- Next.js 15+ App Router
+- TypeScript
+- Tailwind CSS
+- ShadCN UI
+- Prisma
+- PostgreSQL setup
+- ESLint / Prettier
+- Environment configuration
+
+Task 1.2
+Create scalable folder architecture:
+/app
+  /(marketing)
+  /admin
+  /api
+/components
+/lib
+/prisma
+/actions
+/hooks
+/types
+
+Task 1.3
+Configure global theme:
+- Brand colors
+- Typography
+- Container widths
+- Reusable spacing system
+- Button variants
+- Card variants
+
+==================================================
+PHASE 2 — DATABASE LAYER
+==================================================
+
+Task 2.1
+Create Prisma schema:
+
+model Appointment {
+  id            String   @id @default(cuid())
+  fullName      String
+  phone         String
+  email         String?
+  service       String
+  preferredDate DateTime
+  preferredTime String
+  notes         String?
+  status        AppointmentStatus @default(PENDING)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+Task 2.2
+Generate migrations and Prisma client.
+
+Task 2.3
+Create DB utility layer:
+- Prisma singleton
+- Query helpers
+- Error abstraction
+
+==================================================
+PHASE 3 — AUTHENTICATION
+==================================================
+
+Task 3.1
+Implement Auth.js / NextAuth
+
+Task 3.2
+Create admin login page
+
+Task 3.3
+Protect admin routes
+
+Task 3.4
+Implement role-based authorization
+
+==================================================
+PHASE 4 — PUBLIC WEBSITE
+==================================================
+
+Task 4.1 Sticky Header
+Task 4.2 Hero Section
+Task 4.3 Services Grid
+Task 4.4 Why Choose Us
+Task 4.5 About Clinic
+Task 4.6 Emergency Banner
+Task 4.7 Location / Map
+Task 4.8 Contact / Hours
+Task 4.9 Testimonials
+Task 4.10 Footer
+
+==================================================
+PHASE 5 — BOOKING SYSTEM
+==================================================
+
+Task 5.1 Appointment Form UI
+Task 5.2 Zod Validation
+Task 5.3 Booking Server Action/API
+Task 5.4 Save to PostgreSQL
+Task 5.5 Success/Error Toasts
+Task 5.6 WhatsApp Redirect
+
+==================================================
+PHASE 6 — ADMIN DASHBOARD
+==================================================
+
+Task 6.1 Dashboard Layout
+Task 6.2 Appointments Table
+Task 6.3 Search/Filter
+Task 6.4 Status Updates
+Task 6.5 Delete Appointment
+Task 6.6 Analytics Cards
+
+==================================================
+PHASE 7 — SEO
+==================================================
+
+Task 7.1 Metadata API
+Task 7.2 Open Graph/Twitter
+Task 7.3 LocalBusiness JSON-LD
+Task 7.4 Sitemap
+Task 7.5 Robots.txt
+
+==================================================
+PHASE 8 — PERFORMANCE
+==================================================
+
+Task 8.1 next/image Optimization
+Task 8.2 Lazy Loading
+Task 8.3 Hydration Optimization
+Task 8.4 Core Web Vitals Audit
+
+==================================================
+PHASE 9 — ACCESSIBILITY / POLISH
+==================================================
+
+Task 9.1 ARIA Labels
+Task 9.2 Keyboard Navigation
+Task 9.3 Contrast Compliance
+Task 9.4 Framer Motion Animations
+
+==================================================
+PHASE 10 — FINALIZATION
+==================================================
+
+Task 10.1 Seed Demo/Test Data
+
+Task 10.2 README
+Include:
+- Setup Steps
+- Env Variables
+- Migration Commands
+- Deployment Instructions
+
+Task 10.3 Cleanup / Refactor
+
+Task 10.4 Production Audit
+Verify:
+- No console errors
+- No TS errors
+- No lint issues
+- No broken links
+- No placeholder logic
+
+==================================================
+AFTER EACH TASK
+==================================================
+
+Provide:
+1. Summary of completed work
+2. Files created/modified
+3. Architecture decisions
+4. Recommendations before next task
