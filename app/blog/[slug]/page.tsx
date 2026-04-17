@@ -12,6 +12,10 @@ import { Button } from "@/components/ui/button";
 type BlogPostContent = {
   body?: string;
   text?: string;
+  blocks?: Array<{
+    type: string;
+    text: string;
+  }>;
 };
 
 type BlogPostPageProps = {
@@ -43,13 +47,40 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
-  // Basic content processing (splitting text content into paragraphs)
+  // Basic content processing (handling both block-based and text-based content)
   const content =
     typeof post.content === "object" && post.content !== null && !Array.isArray(post.content)
       ? (post.content as BlogPostContent)
       : null;
-  const contentText = content?.body || content?.text || "";
-  const paragraphs = contentText.split(/\n\n+/).filter(Boolean);
+  
+  let contentElements: React.ReactNode[] = [];
+  
+  if (content?.blocks && Array.isArray(content.blocks)) {
+    // Process block-based content
+    contentElements = content.blocks.map((block, i) => {
+      if (block.type === "heading") {
+        return (
+          <h2 key={i} className="text-2xl font-bold mt-8 mb-4 text-foreground">
+            {block.text}
+          </h2>
+        );
+      }
+      return (
+        <p key={i} className="text-muted-foreground text-lg leading-loose mb-6">
+          {block.text}
+        </p>
+      );
+    });
+  } else {
+    // Fallback: process text-based content
+    const contentText = content?.body || content?.text || "";
+    const paragraphs = contentText.split(/\n\n+/).filter(Boolean);
+    contentElements = paragraphs.map((para: string, i: number) => (
+      <p key={i} className="text-muted-foreground text-lg leading-loose mb-8">
+        {para}
+      </p>
+    ));
+  }
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -102,11 +133,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="container-app px-4 max-w-3xl mx-auto">
           {/* Article Content */}
           <article className="prose prose-invert prose-lg max-w-none">
-             {paragraphs.map((para: string, i: number) => (
-                <p key={i} className="text-muted-foreground text-lg leading-loose mb-8">
-                  {para}
-                </p>
-             ))}
+            {contentElements}
           </article>
 
           <div className="mt-20 pt-10 border-t border-white/10 flex items-center justify-between">
