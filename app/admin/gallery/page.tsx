@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Plus, Trash2, Check, ImageIcon } from "lucide-react";
+import { Loader2, Plus, Trash2, Check, ImageIcon, X, Edit } from "lucide-react";
 import { toast } from "sonner";
 
 interface GalleryItem {
@@ -16,14 +16,23 @@ interface GalleryItem {
   order: number;
 }
 
+interface MediaItem {
+  id: string;
+  url: string;
+  filename: string;
+}
+
 export default function GalleryAdminPage() {
   const [items, setItems] = useState<GalleryItem[]>([]);
+  const [mediaLibrary, setMediaLibrary] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [editingItem, setEditingItem] = useState<Partial<GalleryItem> | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [showMediaPicker, setShowMediaPicker] = useState<"before" | "after" | null>(null);
 
   useEffect(() => {
-    fetchItems();
+    Promise.all([fetchItems(), fetchMediaLibrary()]);
   }, []);
 
   async function fetchItems() {
@@ -34,13 +43,11 @@ export default function GalleryAdminPage() {
 
       if (!res.ok) {
         toast.error("Failed to load gallery");
-        console.error("Gallery API error", res.status, data);
         return;
       }
 
       if (!Array.isArray(data)) {
         toast.error("Failed to load gallery");
-        console.error("Unexpected gallery payload", data);
         return;
       }
 
@@ -53,28 +60,55 @@ export default function GalleryAdminPage() {
     }
   }
 
-  const handleCreate = async () => {
+  async function fetchMediaLibrary() {
+    try {
+      const res = await fetch("/api/media");
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        setMediaLibrary(data);
+      }
+    } catch (error) {
+      console.error("Failed to load media library", error);
+    }
+  }
+
+  const handleSave = async () => {
     if (!editingItem?.beforeUrl || !editingItem?.afterUrl) {
       toast.error("Both Before and After images are required");
       return;
     }
 
+    if (!editingItem.caption || editingItem.caption.trim().length === 0) {
+      toast.error("Caption is required");
+      return;
+    }
+
     try {
       setSaving(true);
+      const method = isEditing ? "PATCH" : "POST";
+      const body = isEditing 
+        ? { id: editingItem.id, ...editingItem }
+        : editingItem;
+
       const res = await fetch("/api/gallery", {
-        method: "POST",
-        body: JSON.stringify(editingItem),
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
       });
 
       if (res.ok) {
-        toast.success("Gallery item added");
+        toast.success(isEditing ? "Gallery item updated successfully" : "Gallery item added successfully");
         setEditingItem(null);
+        setIsEditing(false);
+        setShowMediaPicker(null);
         fetchItems();
       } else {
-        toast.error("Failed to add item");
+        const error = await res.json();
+        toast.error(error.error || "Failed to save item");
       }
-    } catch {
+    } catch (error) {
       toast.error("An error occurred");
+      console.error(error);
     } finally {
       setSaving(false);
     }
@@ -91,11 +125,34 @@ export default function GalleryAdminPage() {
 
       if (res.ok) {
         toast.success("Item removed");
-        setItems(items.filter(i => i.id !== id));
+        setItems(items.filter((i) => i.id !== id));
+      } else {
+        toast.error("Failed to delete");
       }
-    } catch {
+    } catch (error) {
       toast.error("Failed to delete");
+      console.error(error);
     }
+  };
+
+  const handleEdit = (item: GalleryItem) => {
+    setEditingItem(item);
+    setIsEditing(true);
+  };
+
+  const handleCancel = () => {
+    setEditingItem(null);
+    setIsEditing(false);
+    setShowMediaPicker(null);
+  };
+
+  const selectMediaItem = (url: string) => {
+    if (showMediaPicker === "before") {
+      setEditingItem({ ...editingItem, beforeUrl: url });
+    } else if (showMediaPicker === "after") {
+      setEditingItem({ ...editingItem, afterUrl: url });
+    }
+    setShowMediaPicker(null);
   };
 
   return (
@@ -116,44 +173,165 @@ export default function GalleryAdminPage() {
       {editingItem && (
         <Card className="mb-10 border-primary/20 bg-primary/5">
           <CardHeader>
-            <CardTitle>New Transformation</CardTitle>
-            <CardDescription>Enter image URLs (from Media Library) and a caption.</CardDescription>
+            <div className="flex justify-between items-start">
+              <div>
+                <CardTitle>{isEditing ? "Edit Transformation" : "New Transformation"}</CardTitle>
+                <CardDescription>
+                  {isEditing 
+                    ? "Update the before and after images and caption for this transformation."
+                    : "Select before and after images from your media library, then add a caption."
+                  }
+                </CardDescription>
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleCancel}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Before Image URL</Label>
-                <div className="flex gap-2">
-                  <Input 
-                    value={editingItem.beforeUrl || ""} 
-                    onChange={e => setEditingItem({...editingItem, beforeUrl: e.target.value})}
-                    placeholder="/uploads/before.jpg"
-                  />
+            {/* Media Picker */}
+            {showMediaPicker && (
+              <div className="mb-6 p-4 bg-background/50 rounded-lg border border-primary/20">
+                <h4 className="font-medium mb-4">
+                  Select {showMediaPicker === "before" ? "Before" : "After"} Image
+                </h4>
+                <div className="grid grid-cols-4 gap-3 max-h-96 overflow-y-auto">
+                  {mediaLibrary.length > 0 ? (
+                    mediaLibrary.map((item) => (
+                      <div
+                        key={item.id}
+                        className="relative cursor-pointer group overflow-hidden rounded border border-border"
+                        onClick={() => selectMediaItem(item.url)}
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={item.url}
+                          alt={item.filename}
+                          className="w-full aspect-square object-cover hover:scale-110 transition-transform"
+                          onError={(e) => {
+                            console.warn(`Failed to load image: ${item.url}`);
+                            (e.target as HTMLImageElement).style.backgroundColor = "#f0f0f0";
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+                          <Check className="h-5 w-5 text-white" />
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="col-span-4 text-center text-sm text-muted-foreground py-8">
+                      No images in media library. Please upload images first.
+                    </p>
+                  )}
                 </div>
               </div>
+            )}
+
+            {/* Before/After Image Selection */}
+            <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>After Image URL</Label>
-                <Input 
-                  value={editingItem.afterUrl || ""} 
-                  onChange={e => setEditingItem({...editingItem, afterUrl: e.target.value})}
-                  placeholder="/uploads/after.jpg"
-                />
+                <Label>Before Image</Label>
+                {editingItem.beforeUrl ? (
+                  <div className="relative overflow-hidden rounded border border-border" style={{ height: "200px" }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={editingItem.beforeUrl}
+                      alt="Before"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        console.error("Failed to load image:", editingItem.beforeUrl);
+                        (e.target as HTMLImageElement).style.backgroundColor = "#f0f0f0";
+                      }}
+                    />
+                    <div className="absolute top-2 left-2 bg-black/60 text-white text-xs px-2 py-1 rounded font-bold">
+                      BEFORE
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      className="absolute bottom-2 right-2"
+                      onClick={() => setShowMediaPicker("before")}
+                    >
+                      Change
+                    </Button>
+                  </div>
+                ) : (
+                  <Button
+                    variant="outline"
+                    className="w-full h-32 border-dashed"
+                    onClick={() => setShowMediaPicker("before")}
+                  >
+                    <ImageIcon className="h-6 w-6 mr-2" />
+                    Select Before Image
+                  </Button>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label>After Image</Label>
+                {editingItem.afterUrl ? (
+                  <div className="relative overflow-hidden rounded border border-border" style={{ height: "200px" }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={editingItem.afterUrl}
+                      alt="After"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        console.error("Failed to load image:", editingItem.afterUrl);
+                        (e.target as HTMLImageElement).style.backgroundColor = "#f0f0f0";
+                      }}
+                    />
+                    <div className="absolute top-2 right-2 bg-primary/80 text-white text-xs px-2 py-1 rounded font-bold">
+                      AFTER
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      className="absolute bottom-2 right-2"
+                      onClick={() => setShowMediaPicker("after")}
+                    >
+                      Change
+                    </Button>
+                  </div>
+                ) : (
+                  <Button
+                    variant="outline"
+                    className="w-full h-32 border-dashed"
+                    onClick={() => setShowMediaPicker("after")}
+                  >
+                    <ImageIcon className="h-6 w-6 mr-2" />
+                    Select After Image
+                  </Button>
+                )}
               </div>
             </div>
+
             <div className="space-y-2">
               <Label>Caption / Case Description</Label>
-              <Input 
-                value={editingItem.caption || ""} 
-                onChange={e => setEditingItem({...editingItem, caption: e.target.value})}
+              <Input
+                value={editingItem.caption || ""}
+                onChange={(e) => setEditingItem({ ...editingItem, caption: e.target.value })}
                 placeholder="e.g., Full Mouth Rehabilitation"
+                className="w-full"
               />
             </div>
+
             <div className="flex justify-end gap-3 pt-4">
-               <Button variant="ghost" onClick={() => setEditingItem(null)} disabled={saving}>Cancel</Button>
-               <Button onClick={handleCreate} disabled={saving}>
-                 {saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Check className="h-4 w-4 mr-2" />}
-                 Save Transformation
-               </Button>
+              <Button
+                variant="ghost"
+                onClick={handleCancel}
+                disabled={saving}
+              >
+                Cancel
+              </Button>
+              <Button onClick={handleSave} disabled={saving || !editingItem.beforeUrl || !editingItem.afterUrl}>
+                {saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Check className="h-4 w-4 mr-2" />}
+                {isEditing ? "Update Transformation" : "Save Transformation"}
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -172,27 +350,60 @@ export default function GalleryAdminPage() {
         <div className="grid gap-6">
           {items.map((item) => (
             <Card key={item.id} className="overflow-hidden hover:border-primary/30 transition-colors">
-              <CardContent className="p-0 flex flex-col md:flex-row h-full md:h-40">
-                <div className="flex flex-1">
-                  <div className="w-1/2 relative h-40 md:h-full">
+              <CardContent className="p-0 flex flex-col md:flex-row h-full md:h-48">
+                <div className="flex flex-1 bg-muted/5">
+                  <div className="w-1/2 relative h-48 bg-muted/10 border-r border-border">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={item.beforeUrl} alt="Before" className="w-full h-full object-cover" />
-                    <span className="absolute top-2 left-2 bg-black/50 text-[8px] text-white px-2 py-0.5 rounded font-bold uppercase">Before</span>
+                    <img 
+                      src={item.beforeUrl} 
+                      alt="Before" 
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.backgroundColor = "#f0f0f0";
+                        (e.target as HTMLImageElement).style.color = "#999";
+                      }}
+                    />
+                    <span className="absolute top-2 left-2 bg-black/50 text-[8px] text-white px-2 py-0.5 rounded font-bold uppercase">
+                      Before
+                    </span>
                   </div>
-                  <div className="w-1/2 relative h-40 md:h-full border-l border-white/10">
+                  <div className="w-1/2 relative h-48 bg-muted/10">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={item.afterUrl} alt="After" className="w-full h-full object-cover" />
-                    <span className="absolute top-2 right-2 bg-primary/80 text-[8px] text-white px-2 py-0.5 rounded font-bold uppercase">After</span>
+                    <img 
+                      src={item.afterUrl} 
+                      alt="After" 
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.backgroundColor = "#f0f0f0";
+                        (e.target as HTMLImageElement).style.color = "#999";
+                      }}
+                    />
+                    <span className="absolute top-2 right-2 bg-primary/80 text-[8px] text-white px-2 py-0.5 rounded font-bold uppercase">
+                      After
+                    </span>
                   </div>
                 </div>
-                
+
                 <div className="flex-[2] p-6 flex items-center justify-between">
                   <div>
-                    <h3 className="font-bold text-lg">{item.caption || "Untiled Transformation"}</h3>
+                    <h3 className="font-bold text-lg">{item.caption || "Untitled Transformation"}</h3>
                     <p className="text-xs text-muted-foreground mt-1">ID: {item.id}</p>
                   </div>
                   <div className="flex gap-2">
-                    <Button variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10" onClick={() => handleDelete(item.id)}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-blue-600 hover:bg-blue-50"
+                      onClick={() => handleEdit(item)}
+                    >
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-destructive hover:bg-destructive/10"
+                      onClick={() => handleDelete(item.id)}
+                    >
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
