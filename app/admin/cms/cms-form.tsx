@@ -47,6 +47,7 @@ const SECTION_TEMPLATES: Record<string, Record<string, JsonValue>> = {
     titleAccent: "Perfect Smile",
     subtitle: "Experience world-class dental care in a state-of-the-art facility located in central Thongping. We combine advanced digital diagnostics with a genuine commitment to painless, stress-free family dentistry. From routine maintenance to complex oral rehabilitations, we are Juba's most trusted medical center for premium oral health.",
     backgroundImage: "",
+    illustrationImage: "",
     ctaPrimary: "Reserve Your Visit",
     ctaSecondary: "Explore Treatments",
     stats: [

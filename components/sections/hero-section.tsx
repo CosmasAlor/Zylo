@@ -12,6 +12,7 @@ interface HeroData {
   subtitle?: string;
   description?: string;
   backgroundImage?: string;
+  illustrationImage?: string;
   ctaPrimary?: string;
   ctaSecondary?: string;
   stats?: { label: string; value: string }[];
@@ -93,7 +94,24 @@ export async function HeroSection() {
         <MotionReveal delay={0.15} className="relative">
           {/* Decorative card with dental illustration */}
           <div className="relative rounded-3xl border border-border/70 bg-gradient-to-br from-card via-card to-secondary/30 p-8 shadow-xl shadow-primary/5">
-            <svg viewBox="0 0 400 360" fill="none" className="mx-auto w-full max-w-sm" aria-hidden="true">
+            {data.illustrationImage ? (
+              <Image
+                src={data.illustrationImage}
+                alt="Dental illustration"
+                width={400}
+                height={360}
+                className="mx-auto w-full max-w-sm"
+                onError={(e) => {
+                  const imgElement = e.target as HTMLImageElement;
+                  imgElement.style.display = 'none';
+                  // Show fallback SVG
+                  const container = imgElement.parentElement;
+                  const fallback = container?.querySelector('.fallback-svg') as HTMLElement;
+                  if (fallback) fallback.style.display = 'block';
+                }}
+              />
+            ) : null}
+            <svg viewBox="0 0 400 360" fill="none" className={`mx-auto w-full max-w-sm ${data.illustrationImage ? 'fallback-svg hidden' : ''}`} aria-hidden="true">
               <circle cx="200" cy="180" r="140" fill="url(#heroGrad)" opacity="0.1" />
               <path
                 d="M200 60 c-45 0-80 30-80 75 c0 25 15 45 30 70 c15 25 25 55 30 80 c2 15 8 25 12 25 h16 c4 0 10-10 12-25 c5-25 15-55 30-80 c15-25 30-45 30-70 c0-45-35-75-80-75z"
