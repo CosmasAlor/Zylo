@@ -20,13 +20,6 @@ model Appointment {
   updatedAt     DateTime          @updatedAt
 }
 
-enum AppointmentStatus {
-  PENDING
-  CONFIRMED
-  COMPLETED
-  CANCELLED
-}
-
 model LogEntry {
   id        String   @id @default(cuid())
   type      LogType
@@ -37,12 +30,6 @@ model LogEntry {
   createdAt DateTime @default(now())
 }
 
-enum LogType {
-  EVENT
-  ERROR
-  WARNING
-}
-  
 model ModuleConfig {
   id        String   @id @default(cuid())
   name      String   @unique
@@ -61,7 +48,7 @@ model BlogPost {
   id         String   @id @default(cuid())
   slug       String   @unique
   title      String
-  content    Json     // Store as Rich Text JSON or blocks
+  content    Json
   excerpt    String?
   coverImage String?
   published  Boolean  @default(false)
@@ -71,7 +58,7 @@ model BlogPost {
 
 model MediaItem {
   id        String   @id @default(cuid())
-  url       String   // Relative path to /public/uploads/
+  url       String
   filename  String
   fileType  String
   size      Int
@@ -79,10 +66,23 @@ model MediaItem {
 }
 
 model GalleryItem {
-  id         String   @id @default(cuid())
-  beforeUrl  String
-  afterUrl   String
-  caption    String?
-  order      Int      @default(0)
-  createdAt  DateTime @default(now())
+  id        String   @id @default(cuid())
+  beforeUrl String
+  afterUrl  String
+  caption   String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+enum LogType {
+  EVENT
+  ERROR
+  WARNING
 }
