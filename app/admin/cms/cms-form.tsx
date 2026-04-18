@@ -237,7 +237,17 @@ export default function CMSForm({ initialBlocks }: { initialBlocks: ContentBlock
         // Refresh the preview iframe if it exists
         const iframe = document.querySelector('iframe') as HTMLIFrameElement;
         if (iframe) {
-          iframe.src = iframe.src;
+          try {
+            // Force a complete reload by clearing and resetting src
+            const currentSrc = iframe.src || window.location.origin + '/';
+            iframe.src = 'about:blank';
+            setTimeout(() => {
+              iframe.src = currentSrc;
+              console.log('Refreshed preview iframe:', currentSrc);
+            }, 100);
+          } catch (error) {
+            console.error('Failed to refresh preview iframe:', error);
+          }
         }
       } else {
         toast.error("Failed to update content");

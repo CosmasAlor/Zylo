@@ -24,10 +24,11 @@ export default async function CMSPage() {
           <div className="sticky top-8 space-y-4">
             <h3 className="font-semibold text-sm">Live Preview</h3>
             <div className="overflow-hidden rounded-2xl border bg-background shadow-2xl h-[700px] w-full">
-              <iframe 
-                src="/" 
-                className="w-[1280px] h-[2240px] origin-top-left scale-[0.3125] border-none pointer-events-none" 
+              <iframe
+                src={`${process.env.NEXT_PUBLIC_APP_URL || ''}/`}
+                className="w-[1280px] h-[2240px] origin-top-left scale-[0.3125] border-none pointer-events-none"
                 title="Landing Page Preview"
+                loading="lazy"
               />
             </div>
             <p className="text-[10px] text-muted-foreground text-center">
