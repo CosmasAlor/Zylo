@@ -1,0 +1,13 @@
+{
+  "exportedAt": "2026-04-18T19:02:14.944Z",
+  "totalRecords": 18,
+  "tables": {
+    "appointments": 3,
+    "logEntries": 5,
+    "moduleConfigs": 0,
+    "contentBlocks": 1,
+    "blogPosts": 3,
+    "mediaItems": 3,
+    "galleryItems": 3
+  }
+}

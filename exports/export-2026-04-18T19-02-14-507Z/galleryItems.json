@@ -1,0 +1,26 @@
+[
+  {
+    "id": "cmo323nyh0005o8jnphrt2otn",
+    "beforeUrl": "http://localhost:3000/uploads/4b371454-d4d0-43ee-acc2-3034c7fd8594.png",
+    "afterUrl": "http://localhost:3000/uploads/864e4078-8698-4ba2-9bfe-a1be635a4d27.jpeg",
+    "caption": null,
+    "order": 2,
+    "createdAt": "2026-04-17T13:21:54.953Z"
+  },
+  {
+    "id": "cmo31g4xg00072sjnx6n199v4",
+    "beforeUrl": "/uploads/4170525a-6a25-447b-bc58-8f6d6a0817f8.png",
+    "afterUrl": "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&q=80&w=800",
+    "caption": "Cosmetic Veneers",
+    "order": 1,
+    "createdAt": "2026-04-17T13:03:37.204Z"
+  },
+  {
+    "id": "cmo320vm80003o8jn2abcmmwu",
+    "beforeUrl": "http://localhost:3000/uploads/4b371454-d4d0-43ee-acc2-3034c7fd8594.png",
+    "afterUrl": "/uploads/4170525a-6a25-447b-bc58-8f6d6a0817f8.png",
+    "caption": "testing",
+    "order": 2,
+    "createdAt": "2026-04-17T13:19:44.912Z"
+  }
+]
