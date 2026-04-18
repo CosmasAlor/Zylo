@@ -59,9 +59,11 @@ export async function ValueSection() {
                 height={256}
                 className="w-full h-64 object-cover rounded-2xl"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
+                  const imgElement = e.target as HTMLImageElement;
+                  imgElement.style.display = 'none';
                   // Show fallback SVG
-                  const fallback = e.target.parentElement?.querySelector('.fallback-svg') as HTMLElement;
+                  const container = imgElement.parentElement;
+                  const fallback = container?.querySelector('.fallback-svg') as HTMLElement;
                   if (fallback) fallback.style.display = 'block';
                 }}
               />
