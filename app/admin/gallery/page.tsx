@@ -243,8 +243,15 @@ export default function GalleryAdminPage() {
                       alt="Before"
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        console.error("Failed to load image:", editingItem.beforeUrl);
-                        (e.target as HTMLImageElement).style.backgroundColor = "#f0f0f0";
+                        console.warn("Image failed to load, showing fallback:", editingItem.beforeUrl);
+                        const img = e.target as HTMLImageElement;
+                        img.style.backgroundColor = "#f3f4f6";
+                        img.style.display = "flex";
+                        img.style.alignItems = "center";
+                        img.style.justifyContent = "center";
+                        img.style.color = "#6b7280";
+                        img.style.fontSize = "12px";
+                        img.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJDMTMuMSAyIDE0IDIuOSAxNCA0VjE2QzE0IDE3LjEgMTMuMSAxOCA5IDE4QzQuOSAxOCA0IDE3LjEgNCAxNlY0QzQgMi45IDQuOSAyIDYgMkg5QzEwLjEgMiAxMSAyLjkgMTEgNFYxNkgxMloiIGZpbGw9IiM2QjcyODAiLz4KPHBhdGggZD0iTTEzIDJDMTMuMSAyIDE0IDIuOSAxNCA0VjE2QzE0IDE3LjEgMTMuMSAxOCA5IDE4QzQuOSAxOCA0IDE3LjEgNCAxNlY0QzQgMi45IDQuOSAyIDYgMkg5QzEwLjEgMiAxMSAyLjkgMTEgNFYxNkgxMloiIGZpbGw9IiM2QjcyODAiLz4KPHJlY3QgeD0iMTMiIHk9IjgiIHdpZHRoPSIyIiBoZWlnaHQ9IjIiIHJ4PSIxIiBmaWxsPSIjNkI3MjgwIi8+Cjwvc3ZnPgo=";
                       }}
                     />
                     <div className="absolute top-2 left-2 bg-black/60 text-white text-xs px-2 py-1 rounded font-bold">
@@ -281,8 +288,15 @@ export default function GalleryAdminPage() {
                       alt="After"
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        console.error("Failed to load image:", editingItem.afterUrl);
-                        (e.target as HTMLImageElement).style.backgroundColor = "#f0f0f0";
+                        console.warn("Image failed to load, showing fallback:", editingItem.afterUrl);
+                        const img = e.target as HTMLImageElement;
+                        img.style.backgroundColor = "#f3f4f6";
+                        img.style.display = "flex";
+                        img.style.alignItems = "center";
+                        img.style.justifyContent = "center";
+                        img.style.color = "#6b7280";
+                        img.style.fontSize = "12px";
+                        img.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJDMTMuMSAyIDE0IDIuOSAxNCA0VjE2QzE0IDE3LjEgMTMuMSAxOCA5IDE4QzQuOSAxOCA0IDE3LjEgNCAxNlY0QzQgMi45IDQuOSAyIDYgMkg5QzEwLjEgMiAxMSAyLjkgMTEgNFYxNkgxMloiIGZpbGw9IiM2QjcyODAiLz4KPHBhdGggZD0iTTEzIDJDMTMuMSAyIDE0IDIuOSAxNCA0VjE2QzE0IDE3LjEgMTMuMSAxOCA5IDE4QzQuOSAxOCA0IDE3LjEgNCAxNlY0QzQgMi45IDQuOSAyIDYgMkg5QzEwLjEgMiAxMSAyLjkgMTEgNFYxNkgxMloiIGZpbGw9IiM2QjcyODAiLz4KPHJlY3QgeD0iMTMiIHk9IjgiIHdpZHRoPSIyIiBoZWlnaHQ9IjIiIHJ4PSIxIiBmaWxsPSIjNkI3MjgwIi8+Cjwvc3ZnPgo=";
                       }}
                     />
                     <div className="absolute top-2 right-2 bg-primary/80 text-white text-xs px-2 py-1 rounded font-bold">
@@ -359,8 +373,15 @@ export default function GalleryAdminPage() {
                       alt="Before" 
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).style.backgroundColor = "#f0f0f0";
-                        (e.target as HTMLImageElement).style.color = "#999";
+                        console.warn("Gallery image failed to load:", item.beforeUrl);
+                        const img = e.target as HTMLImageElement;
+                        img.style.backgroundColor = "#f3f4f6";
+                        img.style.display = "flex";
+                        img.style.alignItems = "center";
+                        img.style.justifyContent = "center";
+                        img.style.color = "#6b7280";
+                        img.style.fontSize = "10px";
+                        img.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTggMkM4LjQgMiA5IDIuNiA5IDRWMTJDOSA5LjQgOC40IDEwIDggMTBDNy42IDEwIDcgOS40IDcgOFY0QzcgMi42IDcuNiAyIDggMkgxMUM4LjQgMiA5IDIuNiA5IDRWOFYxMloiIGZpbGw9IiM2QjcyODAiLz4KPHJlY3QgeD0iOCIgeT0iNiIgd2lkdGg9IjIiIGhlaWdodD0iMiIgcng9IjEiIGZpbGw9IiM2QjcyODAiLz4KPC9zdmc+Cg==";
                       }}
                     />
                     <span className="absolute top-2 left-2 bg-black/50 text-[8px] text-white px-2 py-0.5 rounded font-bold uppercase">
@@ -374,8 +395,15 @@ export default function GalleryAdminPage() {
                       alt="After" 
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).style.backgroundColor = "#f0f0f0";
-                        (e.target as HTMLImageElement).style.color = "#999";
+                        console.warn("Gallery image failed to load:", item.afterUrl);
+                        const img = e.target as HTMLImageElement;
+                        img.style.backgroundColor = "#f3f4f6";
+                        img.style.display = "flex";
+                        img.style.alignItems = "center";
+                        img.style.justifyContent = "center";
+                        img.style.color = "#6b7280";
+                        img.style.fontSize = "10px";
+                        img.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTggMkM4LjQgMiA5IDIuNiA5IDRWMTJDOSA5LjQgOC40IDEwIDggMTBDNy42IDEwIDcgOS40IDcgOFY0QzcgMi42IDcuNiAyIDggMkgxMUM4LjQgMiA5IDIuNiA5IDRWOFYxMloiIGZpbGw9IiM2QjcyODAiLz4KPHJlY3QgeD0iOCIgeT0iNiIgd2lkdGg9IjIiIGhlaWdodD0iMiIgcng9IjEiIGZpbGw9IiM2QjcyODAiLz4KPC9zdmc+Cg==";
                       }}
                     />
                     <span className="absolute top-2 right-2 bg-primary/80 text-[8px] text-white px-2 py-0.5 rounded font-bold uppercase">
