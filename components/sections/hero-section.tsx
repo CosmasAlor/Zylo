@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { MotionReveal } from "@/components/ui/motion";
 import { Button } from "@/components/ui/button";
 import { getContent } from "@/lib/content";
@@ -10,6 +11,7 @@ interface HeroData {
   titleAccent?: string;
   subtitle?: string;
   description?: string;
+  backgroundImage?: string;
   ctaPrimary?: string;
   ctaSecondary?: string;
   stats?: { label: string; value: string }[];
@@ -32,6 +34,22 @@ export async function HeroSection() {
 
   return (
     <section className="relative overflow-hidden pt-24 pb-12 md:pt-36 md:pb-24">
+      {/* Background image if provided */}
+      {data.backgroundImage && (
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={data.backgroundImage}
+            alt="Hero background"
+            fill
+            className="object-cover"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+            }}
+          />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+      )}
+
       {/* Decorative gradient orbs */}
       <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-accent/15 blur-[100px]" />
       <div className="pointer-events-none absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-primary/10 blur-[100px]" />

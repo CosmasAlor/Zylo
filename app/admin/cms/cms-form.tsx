@@ -46,6 +46,7 @@ const SECTION_TEMPLATES: Record<string, Record<string, JsonValue>> = {
     titleNormal: "Elevating the Art of a",
     titleAccent: "Perfect Smile",
     subtitle: "Experience world-class dental care in a state-of-the-art facility located in central Thongping. We combine advanced digital diagnostics with a genuine commitment to painless, stress-free family dentistry. From routine maintenance to complex oral rehabilitations, we are Juba's most trusted medical center for premium oral health.",
+    backgroundImage: "",
     ctaPrimary: "Reserve Your Visit",
     ctaSecondary: "Explore Treatments",
     stats: [
@@ -129,6 +130,7 @@ const SECTION_TEMPLATES: Record<string, Record<string, JsonValue>> = {
   value: {
     title: "World-Class Integrity in Thongping",
     description: "At Zylo Juba, we don't just fix teeth; we restore confidence and improve overall systemic health through preventive, elite oral care.",
+    backgroundImage: "",
     benefits: [
       "Specialized painless procedures for patients with high dental anxiety",
       "Centrally located in Thongping near Maidan Rainbow and Salam Petrol",
