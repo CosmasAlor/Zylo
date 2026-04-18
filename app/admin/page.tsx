@@ -1,5 +1,5 @@
 import { db } from "@/lib/db/prisma";
-import { LogType, Prisma } from "@prisma/client";
+import { LogType, LogEntry, Prisma } from "@prisma/client";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { LogsTable } from "@/modules/logs/components/LogsTable";
 import { LogFilters } from "@/modules/logs/components/LogFilters";
@@ -37,7 +37,7 @@ export default async function AdminDashboard({ searchParams }: AdminDashboardPro
   const startOfToday = new Date();
   startOfToday.setHours(0, 0, 0, 0);
 
-  let logs: any[] = [];
+  let logs: LogEntry[] = [];
   let totalFiltered = 0;
   let stats: number[] = [0, 0, 0, 0];
 
