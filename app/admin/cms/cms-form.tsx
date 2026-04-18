@@ -239,7 +239,7 @@ export default function CMSForm({ initialBlocks }: { initialBlocks: ContentBlock
         if (iframe) {
           try {
             // Force a complete reload by clearing and resetting src
-            const currentSrc = iframe.src || window.location.origin + '/';
+            const currentSrc = iframe.src;
             iframe.src = 'about:blank';
             setTimeout(() => {
               iframe.src = currentSrc;

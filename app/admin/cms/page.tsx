@@ -5,6 +5,7 @@ export const dynamic = "force-dynamic";
 
 export default async function CMSPage() {
   const blocks = await prisma.contentBlock.findMany();
+  const previewUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
   return (
     <main className="container-app py-8 px-4">
@@ -23,13 +24,24 @@ export default async function CMSPage() {
         <div className="hidden lg:block">
           <div className="sticky top-8 space-y-4">
             <h3 className="font-semibold text-sm">Live Preview</h3>
-            <div className="overflow-hidden rounded-2xl border bg-background shadow-2xl h-[700px] w-full">
-              <iframe
-                src={`${process.env.NEXT_PUBLIC_APP_URL || ''}/`}
-                className="w-[1280px] h-[2240px] origin-top-left scale-[0.3125] border-none pointer-events-none"
-                title="Landing Page Preview"
-                loading="lazy"
-              />
+            <div className="overflow-hidden rounded-2xl border bg-background shadow-2xl h-[700px] w-full relative">
+              {previewUrl ? (
+                <iframe
+                  src={`${previewUrl}/`}
+                  className="w-full h-full border-none"
+                  title="Landing Page Preview"
+                  loading="lazy"
+                  style={{ transform: 'scale(0.5)', transformOrigin: 'top left', width: '200%', height: '200%' }}
+                />
+              ) : (
+                <div className="flex items-center justify-center h-full text-muted-foreground">
+                  <div className="text-center">
+                    <div className="text-2xl mb-2">⚠️</div>
+                    <p className="text-sm">Preview unavailable</p>
+                    <p className="text-xs mt-1">NEXT_PUBLIC_APP_URL not set</p>
+                  </div>
+                </div>
+              )}
             </div>
             <p className="text-[10px] text-muted-foreground text-center">
               Note: Preview reflects the current state of the homepage.
