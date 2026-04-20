@@ -26,21 +26,11 @@ export function AdminLoginForm({ initialError = false }: AdminLoginFormProps) {
         const email = String(formData.get("email") ?? "");
         const password = String(formData.get("password") ?? "");
 
-        const result = await signIn("credentials", {
+        await signIn("credentials", {
           email,
           password,
-          redirect: false,
           callbackUrl: "/admin",
         });
-
-        if (result?.error) {
-          setError(true);
-          setIsSubmitting(false);
-          return;
-        }
-
-        router.push("/admin");
-        router.refresh();
       }}
       className="space-y-4"
     >
