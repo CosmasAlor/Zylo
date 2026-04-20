@@ -1,5 +1,11 @@
+import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
+
+// Fix for Supabase self-signed certificate error in local development
+if (process.env.NODE_ENV !== "production") {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+}
 
 const prismaClientSingleton = () => {
   const databaseUrl = process.env.DATABASE_URL;
@@ -7,7 +13,12 @@ const prismaClientSingleton = () => {
     return new PrismaClient();
   }
   
-  const adapter = new PrismaPg({ connectionString: databaseUrl });
+  const pool = new Pool({ 
+    connectionString: databaseUrl,
+    ssl: { rejectUnauthorized: false }
+  });
+
+  const adapter = new PrismaPg(pool);
   return new PrismaClient({ adapter });
 };
 
