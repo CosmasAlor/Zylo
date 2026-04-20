@@ -28,10 +28,10 @@ type SiteData = {
 };
 
 const defaultNavItems: NavItem[] = [
-  { label: "Services", href: "#services" },
-  { label: "Why Us", href: "#about" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact", href: "#cta" },
+  { label: "Services", href: "/#services" },
+  { label: "Why Us", href: "/#about" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const defaultCta: NavbarCta = {
@@ -90,13 +90,13 @@ export function Navbar({ data, siteData }: { data?: NavbarData | null; siteData?
         {/* Desktop nav */}
         <nav aria-label="Main navigation" className="hidden items-center gap-8 md:flex">
           {navItems.map((item: { label: string; href: string }) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               className="text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-primary"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -125,14 +125,14 @@ export function Navbar({ data, siteData }: { data?: NavbarData | null; siteData?
         <div className="border-t border-border/70 bg-background/95 backdrop-blur-xl md:hidden">
           <div className="container-app flex flex-col gap-3 py-4">
             {navItems.map((item: { label: string; href: string }) => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
                 className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-primary"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
             <div className="flex gap-2 pt-2">
               <Button asChild size="sm" variant="outline" className="flex-1 rounded-xl">

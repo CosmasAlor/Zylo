@@ -68,7 +68,7 @@ export async function ServicesSection() {
   };
 
   return (
-    <section id="services" className="py-20 md:py-24">
+    <section id="services" className="py-24 md:py-32">
       <div className="container-app space-y-12">
         <SectionHeader
           center

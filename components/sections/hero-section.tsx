@@ -34,7 +34,7 @@ export async function HeroSection() {
   };
 
   return (
-    <section className="relative overflow-hidden pt-24 pb-12 md:pt-36 md:pb-24">
+    <section className="relative overflow-hidden pt-24 pb-20 md:pt-36 md:pb-32">
       {/* Background image if provided */}
       {data.backgroundImage && (
         <div className="absolute inset-0 z-0">

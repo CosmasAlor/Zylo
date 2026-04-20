@@ -24,7 +24,7 @@ export async function CtaSection() {
   };
 
   return (
-    <section id="cta" className="py-20 md:py-24">
+    <section id="cta" className="py-24 md:py-32">
       <div className="container-app">
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary to-accent/80 px-6 py-16 text-primary-foreground shadow-xl shadow-primary/20 md:px-12">
           {/* Decorative shapes */}

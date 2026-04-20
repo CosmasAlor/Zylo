@@ -27,7 +27,7 @@ export async function ValueSection() {
   };
 
   return (
-    <section id="about" className="border-y border-border/70 bg-card/50 py-20 md:py-24">
+    <section id="about" className="border-y border-border/70 bg-card/50 py-24 md:py-32">
       <div className="container-app grid items-center gap-12 lg:grid-cols-2">
         <MotionReveal className="space-y-6">
           <SectionHeader

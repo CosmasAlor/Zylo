@@ -56,7 +56,7 @@ export function GallerySection() {
 
   if (items.length === 0 || hasError) {
     return (
-      <section className="py-24 bg-background relative overflow-hidden" id="transformations">
+      <section className="py-24 md:py-32 bg-background relative overflow-hidden" id="transformations">
         <div className="container-app px-4 relative z-10">
           <div className="rounded-3xl border border-dashed border-muted/40 bg-muted/5 p-16 text-center">
             <p className="text-lg font-semibold text-foreground">No gallery transformations are available right now.</p>
@@ -70,7 +70,7 @@ export function GallerySection() {
   }
 
   return (
-    <section className="py-24 bg-background relative overflow-hidden" id="transformations">
+    <section className="py-24 md:py-32 bg-background relative overflow-hidden" id="transformations">
       <div className="container-app px-4 relative z-10">
         <div className="text-center mb-16">
           <motion.span 

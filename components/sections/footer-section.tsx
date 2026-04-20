@@ -43,9 +43,9 @@ const defaultFooterData: FooterData = {
   description: "Modern preventive, cosmetic, and restorative dental care designed around your comfort and wellbeing.",
   links: [
     { label: "Book Appointment", href: "/book" },
-    { label: "Services", href: "#services" },
-    { label: "About Us", href: "#about" },
-    { label: "Testimonials", href: "#testimonials" },
+    { label: "Services", href: "/#services" },
+    { label: "About Us", href: "/#about" },
+    { label: "Contact Us", href: "/contact" },
   ],
   contact: [
     { label: "Google Maps", href: "https://share.google/dazDN1mUm5mykP1DK", icon: "MapPin" },

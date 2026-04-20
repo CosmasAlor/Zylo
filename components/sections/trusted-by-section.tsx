@@ -30,7 +30,7 @@ export async function TrustedBySection({
   };
 
   return (
-    <section className="py-12 md:py-16">
+    <section className="py-24 md:py-32">
       <div className="container-app mb-16">
         <p className="mb-6 text-center text-sm font-medium uppercase tracking-wider text-muted-foreground">
           {data.badge}

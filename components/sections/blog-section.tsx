@@ -38,7 +38,7 @@ export function BlogSection() {
   if (loading || posts.length === 0) return null;
 
   return (
-    <section className="py-24 bg-muted/50" id="blog">
+    <section className="py-24 md:py-32 bg-muted/50" id="blog">
       <div className="container-app px-4">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div className="max-w-2xl">
