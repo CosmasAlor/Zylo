@@ -63,16 +63,6 @@ export async function CtaSection() {
                 </Link>
               </Button>
               
-              <Button
-                asChild
-                size="lg"
-                variant="ghost"
-                className="rounded-xl text-white/50 hover:text-white"
-              >
-                <a href={`tel:${data.phone || "+211925603404"}`}>
-                  Call Juba
-                </a>
-              </Button>
             </div>
           </div>
         </div>

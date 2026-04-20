@@ -170,7 +170,7 @@ export async function FooterSection({
         </div>
 
         <div className="mt-10 border-t border-border/70 pt-6 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} {siteName}. All rights reserved.
+          © {new Date().getFullYear()} {siteName}. All rights reserved. Dev by Cosmas Alor
         </div>
       </div>
     </footer>

@@ -145,9 +145,7 @@ export async function HeroSection() {
         </MotionReveal>
       </div>
 
-      <MotionReveal delay={0.3}>
-        <LogoMarquee />
-      </MotionReveal>
+      {/* Removed LogoMarquee from here as requested to keep only one instance */}
     </section>
   );
 }
