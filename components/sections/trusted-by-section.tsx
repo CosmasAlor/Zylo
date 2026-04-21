@@ -49,7 +49,7 @@ export async function TrustedBySection({
           ))}
         </div>
       </div>
-      
+
       <LogoMarquee data={logosData} />
     </section>
   );

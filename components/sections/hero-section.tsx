@@ -1,9 +1,10 @@
 import Link from "next/link";
-import Image from "next/image";
 import { MotionReveal } from "@/components/ui/motion";
 import { Button } from "@/components/ui/button";
 import { getContent } from "@/lib/content";
 import { LogoMarquee } from "@/components/sections/logo-marquee";
+import { ClientImageFix } from "@/components/ui/client-image-fix";
+import { ArrowRight, Sparkles, ShieldCheck, Heart } from "lucide-react";
 
 interface HeroData {
   badge?: string;
@@ -34,118 +35,136 @@ export async function HeroSection() {
   };
 
   return (
-    <section className="relative overflow-hidden pt-24 pb-20 md:pt-36 md:pb-32">
-      {/* Background image if provided */}
-      {data.backgroundImage && (
-        <div className="absolute inset-0 z-0">
-          <Image
-            src={data.backgroundImage}
-            alt="Hero background"
-            fill
-            className="object-cover"
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = 'none';
-            }}
-          />
-          <div className="absolute inset-0 bg-black/40" />
-        </div>
-      )}
+    <section className="relative overflow-hidden pt-28 pb-20 md:pt-40 md:pb-32 bg-background">
+      {/* Premium Background Elements */}
+      <div className="absolute inset-0 z-0">
+        {/* Mesh Gradients */}
+        <div className="absolute -left-[10%] -top-[10%] h-[60%] w-[60%] rounded-full bg-primary/5 blur-[120px] animate-pulse" />
+        <div className="absolute -right-[10%] top-[20%] h-[50%] w-[50%] rounded-full bg-accent/8 blur-[100px]" />
+        <div className="absolute left-[20%] bottom-0 h-[40%] w-[40%] rounded-full bg-primary/3 blur-[80px]" />
 
-      {/* Decorative gradient orbs */}
-      <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-accent/15 blur-[100px]" />
-      <div className="pointer-events-none absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-primary/10 blur-[100px]" />
+        {/* Subtle Grid Pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, var(--foreground) 1px, transparent 0)`,
+            backgroundSize: "48px 48px"
+          }}
+        />
 
-      <div className="container-app relative grid items-center gap-16 lg:grid-cols-2 mb-20 md:mb-32">
-        <MotionReveal className="space-y-8">
-          <p className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/5 px-4 py-1.5 text-xs font-semibold tracking-wide text-accent-foreground">
-            <span className="inline-block h-2 w-2 rounded-full bg-accent animate-pulse" />
+        {/* Grain Effect Overlay */}
+        <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      </div>
+
+      <div className="container-app relative z-10 grid items-center gap-16 lg:grid-cols-2 mb-20 md:mb-32">
+        <MotionReveal className="space-y-10">
+          <div className="inline-flex items-center gap-3 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-xs font-bold uppercase tracking-widest text-primary shadow-sm backdrop-blur-md">
+            <Sparkles className="h-3.5 w-3.5 animate-pulse" />
             {data.badge}
-          </p>
-          <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-7xl">
+          </div>
+
+          <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight text-foreground md:text-7xl lg:text-8xl">
             {data.titleNormal}{" "}
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              {data.titleAccent}
+            <span className="relative inline-block">
+              <span className="relative z-10 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_auto] bg-clip-text text-transparent animate-gradient-x">
+                {data.titleAccent}
+              </span>
+              <span className="absolute bottom-2 left-0 h-3 w-full bg-primary/10 -rotate-1 z-0" />
             </span>
           </h1>
-          <p className="max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+
+          <p className="max-w-xl text-lg leading-relaxed text-muted-foreground/90 md:text-xl font-medium">
             {data.subtitle || data.description}
           </p>
-          <div className="flex flex-wrap gap-4">
-            <Button asChild size="lg" className="rounded-xl shadow-lg shadow-primary/20">
-              <Link href="/book">{data.ctaPrimary}</Link>
+
+          <div className="flex flex-wrap gap-5">
+            <Button asChild size="lg" className="h-14 px-8 rounded-2xl shadow-xl shadow-primary/25 hover:shadow-primary/40 transition-all duration-300 group">
+              <Link href="/book" className="flex items-center gap-2">
+                {data.ctaPrimary}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="rounded-xl">
+            <Button asChild size="lg" variant="outline" className="h-14 px-8 rounded-2xl border-border/80 hover:bg-secondary/50 backdrop-blur-sm transition-all">
               <a href="tel:+211925603404">{data.ctaSecondary}</a>
             </Button>
           </div>
 
-          {/* Mini trust badges */}
-          <div className="flex flex-wrap items-center gap-6 pt-4">
+          {/* Mini trust badges with improved styling */}
+          <div className="flex flex-wrap items-center gap-x-10 gap-y-6 pt-6">
             {Array.isArray(data?.stats) && data.stats.map((stat: { label: string; value: string }, i: number) => (
-              <div key={i} className="flex items-center gap-2">
-                <span className="text-2xl font-bold text-primary">{stat.value}</span>
-                <span className="text-xs text-muted-foreground leading-tight">{stat.label}</span>
-                {i < (data.stats?.length || 0) - 1 && <div className="ml-4 h-8 w-px bg-border hidden sm:block" />}
+              <div key={i} className="group flex flex-col gap-1">
+                <span className="text-3xl font-black text-foreground group-hover:text-primary transition-colors">{stat.value}</span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/70">{stat.label}</span>
               </div>
             ))}
           </div>
         </MotionReveal>
 
-        <MotionReveal delay={0.15} className="relative">
+        <MotionReveal delay={0.2} className="relative perspective-1000">
           {/* Decorative card with dental illustration */}
-          <div className="relative rounded-3xl border border-border/70 bg-gradient-to-br from-card via-card to-secondary/30 p-8 shadow-xl shadow-primary/5">
-            {data.illustrationImage ? (
-              <Image
-                src={data.illustrationImage}
-                alt="Dental illustration"
-                width={400}
-                height={360}
-                className="mx-auto w-full max-w-sm"
-                onError={(e) => {
-                  const imgElement = e.target as HTMLImageElement;
-                  imgElement.style.display = 'none';
-                  // Show fallback SVG
-                  const container = imgElement.parentElement;
-                  const fallback = container?.querySelector('.fallback-svg') as HTMLElement;
-                  if (fallback) fallback.style.display = 'block';
-                }}
-              />
-            ) : null}
-            <svg viewBox="0 0 400 360" fill="none" className={`mx-auto w-full max-w-sm ${data.illustrationImage ? 'fallback-svg hidden' : ''}`} aria-hidden="true">
-              <circle cx="200" cy="180" r="140" fill="url(#heroGrad)" opacity="0.1" />
-              <path
-                d="M200 60 c-45 0-80 30-80 75 c0 25 15 45 30 70 c15 25 25 55 30 80 c2 15 8 25 12 25 h16 c4 0 10-10 12-25 c5-25 15-55 30-80 c15-25 30-45 30-70 c0-45-35-75-80-75z"
-                fill="url(#toothGrad)"
-                stroke="var(--primary)"
-                strokeWidth="2.5"
-                opacity="0.9"
-              />
-              <defs>
-                <linearGradient id="heroGrad" x1="50" y1="30" x2="350" y2="330">
-                  <stop offset="0%" stopColor="var(--primary)" />
-                  <stop offset="100%" stopColor="var(--accent)" />
-                </linearGradient>
-                <linearGradient id="toothGrad" x1="150" y1="60" x2="250" y2="340">
-                  <stop offset="0%" stopColor="white" />
-                  <stop offset="100%" stopColor="var(--secondary)" />
-                </linearGradient>
-              </defs>
-            </svg>
+          <div className="relative rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-card/80 to-background p-4 shadow-2xl shadow-primary/10 backdrop-blur-md overflow-hidden transform-gpu hover:rotate-y-1 transition-transform duration-700">
+            <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-accent/5" />
 
-            {/* Floating stat cards */}
-            <div className="absolute -left-4 top-1/4 rounded-2xl border border-border/70 bg-background/90 px-4 py-3 shadow-lg backdrop-blur-sm">
-              <p className="text-xs text-muted-foreground uppercase tracking-widest">Satisfaction</p>
-              <p className="text-lg font-bold text-primary">94%</p>
+            <div className="relative rounded-[2rem] bg-background/40 p-8 border border-white/5 overflow-hidden">
+              {data.illustrationImage ? (
+                <ClientImageFix
+                  src={data.illustrationImage}
+                  alt="Dental illustration"
+                  width={500}
+                  height={450}
+                  className="mx-auto w-full max-w-sm drop-shadow-2xl"
+                  fallbackSelector=".hero-illustration-svg"
+                />
+              ) : null}
+              <svg viewBox="0 0 400 360" fill="none" className={`hero-illustration-svg mx-auto w-full max-w-sm ${data.illustrationImage ? 'hidden' : ''}`} aria-hidden="true">
+                <circle cx="200" cy="180" r="140" fill="url(#heroGrad)" opacity="0.1" />
+                <path
+                  d="M200 60 c-45 0-80 30-80 75 c0 25 15 45 30 70 c15 25 25 55 30 80 c2 15 8 25 12 25 h16 c4 0 10-10 12-25 c5-25 15-55 30-80 c15-25 30-45 30-70 c0-45-35-75-80-75z"
+                  fill="url(#toothGrad)"
+                  stroke="var(--primary)"
+                  strokeWidth="2.5"
+                  opacity="0.9"
+                />
+                <defs>
+                  <linearGradient id="heroGrad" x1="50" y1="30" x2="350" y2="330">
+                    <stop offset="0%" stopColor="var(--primary)" />
+                    <stop offset="100%" stopColor="var(--accent)" />
+                  </linearGradient>
+                  <linearGradient id="toothGrad" x1="150" y1="60" x2="250" y2="340">
+                    <stop offset="0%" stopColor="white" />
+                    <stop offset="100%" stopColor="var(--secondary)" />
+                  </linearGradient>
+                </defs>
+              </svg>
             </div>
-            <div className="absolute -right-4 bottom-1/4 rounded-2xl border border-border/70 bg-background/90 px-4 py-3 shadow-lg backdrop-blur-sm">
-              <p className="text-xs text-muted-foreground uppercase tracking-widest">Grade</p>
-              <p className="text-lg font-bold text-accent-foreground">Grade A</p>
+
+            {/* Floating premium indicator cards */}
+            <div className="absolute -left-6 top-1/4 flex items-center gap-3 rounded-2xl border border-white/20 bg-background/80 px-5 py-4 shadow-xl backdrop-blur-xl animate-float">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
+                <ShieldCheck className="h-5 w-5 text-primary" />
+              </div>
+              <div className="flex flex-col">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Certified Safety</p>
+                <p className="text-sm font-bold text-foreground">Grade A Clinic</p>
+              </div>
+            </div>
+
+            <div className="absolute -right-6 bottom-1/4 flex items-center gap-3 rounded-2xl border border-white/20 bg-background/80 px-5 py-4 shadow-xl backdrop-blur-xl animate-float-delayed">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10">
+                <Heart className="h-5 w-5 text-accent" />
+              </div>
+              <div className="flex flex-col">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Patient Score</p>
+                <p className="text-sm font-bold text-foreground">94% Positive</p>
+              </div>
             </div>
           </div>
         </MotionReveal>
       </div>
 
-      {/* Removed LogoMarquee from here as requested to keep only one instance */}
+      <div className="container-app relative z-10">
+        <LogoMarquee />
+      </div>
     </section>
   );
 }

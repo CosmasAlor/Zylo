@@ -73,7 +73,7 @@ export function GallerySection() {
     <section className="py-24 md:py-32 bg-background relative overflow-hidden" id="transformations">
       <div className="container-app px-4 relative z-10">
         <div className="text-center mb-16">
-          <motion.span 
+          <motion.span
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -81,7 +81,7 @@ export function GallerySection() {
           >
             Real Transformations
           </motion.span>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -90,7 +90,7 @@ export function GallerySection() {
           >
             Smile Gallery
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -126,7 +126,7 @@ function BeforeAfterSlider({ item, index }: { item: GalleryItem, index: number }
   const onTouchMove = (e: React.TouchEvent) => handleMove(e.touches[0].clientX);
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -146,7 +146,7 @@ function BeforeAfterSlider({ item, index }: { item: GalleryItem, index: number }
       </div>
 
       {/* After Image */}
-      <div 
+      <div
         className="absolute inset-0 border-r-2 border-white/50"
         style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
       >
@@ -158,7 +158,7 @@ function BeforeAfterSlider({ item, index }: { item: GalleryItem, index: number }
       </div>
 
       {/* Handle */}
-      <div 
+      <div
         className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize z-20 shadow-[0_0_10px_rgba(0,0,0,0.5)]"
         style={{ left: `${sliderPos}%` }}
       >

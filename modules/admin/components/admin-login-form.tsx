@@ -11,7 +11,6 @@ type AdminLoginFormProps = {
 };
 
 export function AdminLoginForm({ initialError = false }: AdminLoginFormProps) {
-  const router = useRouter();
   const [error, setError] = useState(initialError);
   const [isSubmitting, setIsSubmitting] = useState(false);
 

@@ -84,15 +84,15 @@ export async function ServicesSection() {
               <MotionReveal key={item.title} delay={index * 0.05}>
                 <Card className="group relative h-full overflow-hidden rounded-3xl border border-border/70 bg-background/50 p-8 transition-all duration-300 hover:-translate-y-2 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5">
                   <div className="absolute top-0 right-0 h-32 w-32 -translate-y-16 translate-x-16 rounded-full bg-primary/5 blur-3xl transition-opacity duration-300 group-hover:opacity-100" />
-                  
+
                   <div className="relative mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/10 text-accent transition-all duration-500 group-hover:scale-110 group-hover:bg-accent group-hover:text-white">
                     <Icon className="h-7 w-7" />
                   </div>
-                  
+
                   <CardTitle className="relative text-xl font-bold tracking-tight">
                     {item.title}
                   </CardTitle>
-                  
+
                   <CardDescription className="relative mt-4 text-sm leading-relaxed">
                     {item.description}
                   </CardDescription>

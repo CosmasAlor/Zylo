@@ -6,13 +6,15 @@
   --foreground: oklch(0.16 0.018 210);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.16 0.018 210);
-  --primary: oklch(0.42 0.14 196);       /* deep teal */
+  --primary: oklch(0.42 0.14 196);
+  /* deep teal */
   --primary-foreground: oklch(0.99 0.004 195);
   --secondary: oklch(0.93 0.025 190);
   --secondary-foreground: oklch(0.28 0.06 196);
   --muted: oklch(0.94 0.01 195);
   --muted-foreground: oklch(0.48 0.025 210);
-  --accent: oklch(0.62 0.17 177);        /* vivid mint */
+  --accent: oklch(0.62 0.17 177);
+  /* vivid mint */
   --accent-foreground: oklch(0.15 0.04 196);
   --destructive: oklch(0.58 0.24 28);
   --destructive-foreground: oklch(0.97 0.01 25);
@@ -97,4 +99,58 @@ textarea:focus-visible {
   .container-app {
     padding-inline: 2rem;
   }
+}
+
+/* Premium Animations */
+@keyframes gradient-x {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 15s ease infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float-delayed {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float-delayed {
+  animation: float-delayed 8s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
 }

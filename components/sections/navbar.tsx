@@ -63,18 +63,17 @@ export function Navbar({ data, siteData }: { data?: NavbarData | null; siteData?
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled
+      className={`sticky top-0 z-50 transition-all duration-300 ${scrolled
           ? "border-b border-border/70 bg-background/80 shadow-sm backdrop-blur-xl"
           : "bg-background/40 backdrop-blur-sm"
-      }`}
+        }`}
     >
       <div className="container-app flex h-16 items-center justify-between">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2">
           {logoImage ? (
-             // eslint-disable-next-line @next/next/no-img-element
-             <img src={logoImage} alt={siteName} style={{ height: `${logoSize}px` }} className="w-auto max-w-[200px] object-contain" />
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={logoImage} alt={siteName} style={{ height: `${logoSize}px` }} className="w-auto max-w-[200px] object-contain" />
           ) : (
             <>
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground">

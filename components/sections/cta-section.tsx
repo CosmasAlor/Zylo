@@ -38,7 +38,7 @@ export async function CtaSection() {
             <p className="mt-4 text-lg text-primary-foreground/80">
               {data.subtitle || data.description}
             </p>
-            
+
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Button
                 asChild
@@ -62,7 +62,7 @@ export async function CtaSection() {
                   Schedule via Form
                 </Link>
               </Button>
-              
+
             </div>
           </div>
         </div>

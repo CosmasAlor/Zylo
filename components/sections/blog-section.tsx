@@ -42,7 +42,7 @@ export function BlogSection() {
       <div className="container-app px-4">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div className="max-w-2xl">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -51,7 +51,7 @@ export function BlogSection() {
               <Sparkles className="h-4 w-4" />
               Latest from Zylo
             </motion.div>
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -80,10 +80,10 @@ export function BlogSection() {
                 <Card className="h-full border-white/10 overflow-hidden bg-card/40 backdrop-blur-sm transition-all duration-500 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/5">
                   <div className="aspect-[16/9] overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img 
-                      src={post.coverImage || "/placeholder.jpg"} 
-                      alt={post.title} 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                    <img
+                      src={post.coverImage || "/placeholder.jpg"}
+                      alt={post.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                   </div>
                   <CardContent className="p-8">
