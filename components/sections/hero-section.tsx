@@ -35,7 +35,7 @@ export async function HeroSection() {
   };
 
   return (
-    <section className="relative overflow-hidden pt-28 pb-20 md:pt-40 md:pb-32 bg-background">
+    <section className="relative overflow-hidden pt-28 pb-10 md:pt-40 md:pb-10 bg-background">
       {/* Premium Background Elements */}
       <div className="absolute inset-0 z-0">
         {/* Mesh Gradients */}
@@ -63,7 +63,7 @@ export async function HeroSection() {
             {data.badge}
           </div>
 
-          <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight text-foreground md:text-7xl lg:text-8xl">
+          <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight text-foreground md:text-7xl">
             {data.titleNormal}{" "}
             <span className="relative inline-block">
               <span className="relative z-10 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_auto] bg-clip-text text-transparent animate-gradient-x">
@@ -161,10 +161,9 @@ export async function HeroSection() {
           </div>
         </MotionReveal>
       </div>
-
-      <div className="container-app relative z-10">
+      {/* <div className="container-app relative z-10">
         <LogoMarquee />
-      </div>
+      </div> */}
     </section>
   );
 }

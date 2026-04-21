@@ -56,7 +56,7 @@ export async function FeaturesSection() {
   };
 
   return (
-    <section id="features" className="py-24 md:py-32">
+    <section id="features" className="py-15 md:py-12">
       <div className="container-app space-y-12">
         <SectionHeader
           center
