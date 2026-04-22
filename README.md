@@ -6,6 +6,7 @@ Production-oriented dental clinic platform built with Next.js App Router, TypeSc
 ![Landing Page](./image/landing.png)
 
 
+![Landing Page](../../image/landing.png)
 ## Tech Stack
 
 - Next.js 16 (App Router)
