@@ -2,6 +2,10 @@
 
 Production-oriented dental clinic platform built with Next.js App Router, TypeScript, Tailwind, Prisma, PostgreSQL, and NextAuth.
 
+
+![Alt text](image/landing.png)
+
+
 ## Tech Stack
 
 - Next.js 16 (App Router)
@@ -12,6 +16,7 @@ Production-oriented dental clinic platform built with Next.js App Router, TypeSc
 - React Hook Form + Zod
 
 ## Setup Steps
+
 
 1. Install dependencies:
 
