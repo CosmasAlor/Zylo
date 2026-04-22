@@ -3,7 +3,7 @@
 Production-oriented dental clinic platform built with Next.js App Router, TypeScript, Tailwind, Prisma, PostgreSQL, and NextAuth.
 
 
-![Alt text](image/landing.png)
+![Landing Page](./image/landing.png)
 
 
 ## Tech Stack
