@@ -60,8 +60,8 @@ DATABASE_URL="postgresql://postgres:postgres@localhost:5432/zylo?schema=public"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 NEXTAUTH_URL="http://localhost:3000"
 AUTH_SECRET="replace-with-long-random-secret"
-ADMIN_EMAIL="admin@admin.com"
-ADMIN_PASSWORD="admin123"
+ADMIN_EMAIL="admin@test.com"
+ADMIN_PASSWORD="password123"
 ```
 
 ## Migration Commands
