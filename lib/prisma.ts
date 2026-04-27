@@ -18,7 +18,12 @@ const prismaClientSingleton = () => {
   
   const pool = new Pool({ 
     connectionString: databaseUrl,
-    ssl: { rejectUnauthorized: false }
+    ssl: { rejectUnauthorized: false },
+    // Connection pool optimization
+    max: 20, // Maximum number of clients in the pool
+    min: 5,  // Minimum number of clients in the pool
+    idleTimeoutMillis: 30000, // How long a client is allowed to remain idle before being closed
+    connectionTimeoutMillis: 2000, // How long to wait when connecting a new client
   });
 
   const adapter = new PrismaPg(pool);

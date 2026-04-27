@@ -42,24 +42,50 @@ export default async function AdminDashboard({ searchParams }: AdminDashboardPro
   let stats: number[] = [0, 0, 0, 0];
 
   try {
-    const results = await Promise.all([
+    // Optimized: Combine multiple queries into fewer database calls
+    const [logsData, totalCounts] = await Promise.all([
       db.logEntry.findMany({
         where,
         orderBy: { createdAt: "desc" },
         take: limit,
         skip,
+        select: {
+          id: true,
+          type: true,
+          message: true,
+          route: true,
+          stack: true,
+          createdAt: true,
+          payload: true,
+        },
       }),
-      db.logEntry.count({ where }),
-      Promise.all([
-        db.logEntry.count(),
-        db.logEntry.count({ where: { type: "ERROR" } }),
-        db.logEntry.count({ where: { type: "EVENT" } }),
-        db.logEntry.count({ where: { type: "ERROR", createdAt: { gte: startOfToday } } }),
-      ])
+      // Use raw SQL for better performance on multiple counts
+      db.$queryRaw<Array<{total: bigint, errors: bigint, events: bigint, errors_today: bigint}>>`
+        SELECT 
+          COUNT(*) as total,
+          COUNT(CASE WHEN type = 'ERROR' THEN 1 END) as errors,
+          COUNT(CASE WHEN type = 'EVENT' THEN 1 END) as events,
+          COUNT(CASE WHEN type = 'ERROR' AND created_at >= ${startOfToday} THEN 1 END) as errors_today
+        FROM log_entry
+        ${where.type ? Prisma.sql`WHERE type = ${where.type}` : Prisma.sql``}
+      `,
     ]);
-    logs = results[0];
-    totalFiltered = results[1];
-    stats = results[2];
+
+    logs = logsData as LogEntry[];
+    
+    // Get filtered count separately if filters are applied
+    if (where.type || where.OR) {
+      totalFiltered = await db.logEntry.count({ where });
+    } else {
+      totalFiltered = Number(totalCounts[0].total);
+    }
+    
+    stats = [
+      Number(totalCounts[0].total),
+      Number(totalCounts[0].errors),
+      Number(totalCounts[0].events),
+      Number(totalCounts[0].errors_today),
+    ];
   } catch (error) {
     console.error("Database connection error in admin dashboard:", error);
     // Fallback to empty data

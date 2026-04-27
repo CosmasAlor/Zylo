@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/auth";
+import { auth } from "@/auth";
 import { setContent } from "@/lib/content";
 import { rateLimit } from "@/lib/rate-limit";
 
@@ -18,7 +17,7 @@ export async function POST(req: Request) {
     }
 
     // Authentication check for CMS updates
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session || session.user?.role !== "ADMIN") {
       return NextResponse.json({ error: "Unauthorized. Admin privileges required." }, { status: 401 });
     }

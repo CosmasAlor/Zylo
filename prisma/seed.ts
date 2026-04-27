@@ -1,7 +1,9 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 import "dotenv/config";
 
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const databaseUrl = process.env.DATABASE_URL;
 
@@ -17,6 +19,38 @@ async function main() {
   await prisma.blogPost.deleteMany();
   await prisma.galleryItem.deleteMany();
   await prisma.contentBlock.deleteMany();
+  await prisma.user.deleteMany();
+
+  const hashedSuperAdminPassword = await bcrypt.hash("superadmin123", 10);
+  const hashedAdminPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD || "admin123", 10);
+  const hashedUserPassword = await bcrypt.hash("user123", 10);
+
+  await prisma.user.create({
+    data: {
+      email: "superadmin@zylo.com",
+      name: "Super Admin",
+      password: hashedSuperAdminPassword,
+      role: "SUPER_ADMIN",
+    },
+  });
+
+  await prisma.user.create({
+    data: {
+      email: process.env.ADMIN_EMAIL || "admin@zylo.com",
+      name: "Admin",
+      password: hashedAdminPassword,
+      role: "ADMIN",
+    },
+  });
+
+  await prisma.user.create({
+    data: {
+      email: "user@zylo.com",
+      name: "Normal User",
+      password: hashedUserPassword,
+      role: "USER",
+    },
+  });
 
   await prisma.appointment.createMany({
     data: [

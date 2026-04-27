@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth";
+import { auth } from "@/auth";
 import { LogType, Prisma } from "@prisma/client";
 import { db } from "@/lib/db/prisma";
 
@@ -39,7 +38,7 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session || session.user.role !== "ADMIN") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -68,6 +67,14 @@ export async function GET(req: NextRequest) {
         orderBy: { createdAt: "desc" },
         take: limit,
         skip,
+        select: {
+          id: true,
+          type: true,
+          message: true,
+          route: true,
+          stack: true,
+          createdAt: true,
+        },
       }),
       db.logEntry.count({ where }),
     ]);
@@ -81,7 +88,7 @@ export async function GET(req: NextRequest) {
 
 export async function DELETE() {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session || session.user.role !== "ADMIN") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

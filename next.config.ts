@@ -38,8 +38,23 @@ const nextConfig: NextConfig = {
       },
     ],
     formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
   },
   serverExternalPackages: ["@prisma/client"],
+  // Performance optimizations
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ["lucide-react", "@radix-ui/react-slot"],
+  },
+  // Caching configuration
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "/api/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

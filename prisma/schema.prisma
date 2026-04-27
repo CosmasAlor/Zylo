@@ -7,7 +7,7 @@ datasource db {
 }
 
 model Appointment {
-  id            String            @id @default(cuid())
+  id            String            @id
   fullName      String
   phone         String
   email         String?
@@ -17,7 +17,46 @@ model Appointment {
   notes         String?
   status        AppointmentStatus @default(PENDING)
   createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @updatedAt
+  updatedAt     DateTime
+}
+
+model BlogPost {
+  id         String   @id
+  slug       String   @unique
+  title      String
+  content    Json
+  excerpt    String?
+  coverImage String?
+  published  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime
+}
+
+model ContactMessage {
+  id        String        @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String
+  status    MessageStatus @default(UNREAD)
+  createdAt DateTime      @default(now())
+}
+
+model ContentBlock {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
+model GalleryItem {
+  id        String   @id @default(cuid())
+  beforeUrl String
+  afterUrl  String
+  caption   String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
 }
 
 model LogEntry {
@@ -30,32 +69,6 @@ model LogEntry {
   createdAt DateTime @default(now())
 }
 
-model ModuleConfig {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  isEnabled Boolean  @default(true)
-  updatedAt DateTime @updatedAt
-}
-
-model ContentBlock {
-  id        String   @id @default(cuid())
-  key       String   @unique
-  value     Json
-  updatedAt DateTime @updatedAt
-}
-
-model BlogPost {
-  id         String   @id @default(cuid())
-  slug       String   @unique
-  title      String
-  content    Json
-  excerpt    String?
-  coverImage String?
-  published  Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-}
-
 model MediaItem {
   id        String   @id @default(cuid())
   url       String
@@ -65,30 +78,21 @@ model MediaItem {
   createdAt DateTime @default(now())
 }
 
-model GalleryItem {
+model ModuleConfig {
   id        String   @id @default(cuid())
-  beforeUrl String
-  afterUrl  String
-  caption   String?
-  order     Int      @default(0)
-  createdAt DateTime @default(now())
+  name      String   @unique
+  isEnabled Boolean  @default(true)
+  updatedAt DateTime @updatedAt
 }
 
-model ContactMessage {
-  id        String   @id @default(cuid())
-  name      String
-  email     String
-  phone     String?
-  subject   String?
-  message   String
-  status    MessageStatus @default(UNREAD)
+model User {
+  id        String   @id
+  email     String   @unique
+  password  String
+  name      String?
+  role      UserRole @default(USER)
   createdAt DateTime @default(now())
-}
-
-enum MessageStatus {
-  UNREAD
-  READ
-  ARCHIVED
+  updatedAt DateTime
 }
 
 enum AppointmentStatus {
@@ -102,4 +106,16 @@ enum LogType {
   EVENT
   ERROR
   WARNING
+}
+
+enum MessageStatus {
+  UNREAD
+  READ
+  ARCHIVED
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  USER
 }

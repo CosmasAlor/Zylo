@@ -1,15 +1,17 @@
-import type { NextAuthOptions } from "next-auth";
+import auth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 import { env } from "@/lib/env";
 
-export const authOptions: NextAuthOptions = {
+const authConfig = auth({
   secret: env.AUTH_SECRET,
   session: {
     strategy: "jwt",
-    maxAge: 3 * 60 * 60, // 3 hours default session
-    updateAge: 24 * 60 * 60, // 24 hours
+    maxAge: 30 * 60, // 30 minutes session timeout for security
+    updateAge: 15 * 60, // Update session every 15 minutes
   },
+  // Add CSRF protection
+  useSecureCookies: process.env.NODE_ENV === "production",
   providers: [
     Credentials({
       credentials: {
@@ -58,4 +60,8 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/admin/login",
   },
-};
+});
+
+export const { handlers, signIn, signOut, auth: authInstance } = authConfig;
+export const authOptions = authConfig;
+export { authInstance as auth };

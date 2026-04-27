@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/auth";
+import { auth } from "@/auth";
 import { getPosts, createPost, updatePost, deletePost } from "@/modules/blog/services/blog";
 
 export async function GET(req: Request) {
@@ -17,11 +16,19 @@ export async function GET(req: Request) {
       if (!post) {
         return NextResponse.json({ error: "Post not found" }, { status: 404 });
       }
-      return NextResponse.json(post);
+      
+      // Cache individual posts for 1 hour
+      const response = NextResponse.json(post);
+      response.headers.set("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=86400");
+      return response;
     }
     
     const posts = await getPosts(publishedOnly);
-    return NextResponse.json(posts);
+    
+    // Cache blog posts list for 30 minutes
+    const response = NextResponse.json(posts);
+    response.headers.set("Cache-Control", "public, s-maxage=1800, stale-while-revalidate=3600");
+    return response;
   } catch (error) {
     console.error("Blog fetch error:", error);
     return NextResponse.json({ error: "Failed to fetch posts" }, { status: 500 });
@@ -29,7 +36,7 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (session?.user?.role !== "ADMIN") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -48,7 +55,7 @@ export async function POST(req: Request) {
 }
 
 export async function PATCH(req: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (session?.user?.role !== "ADMIN") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -67,7 +74,7 @@ export async function PATCH(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (session?.user?.role !== "ADMIN") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
