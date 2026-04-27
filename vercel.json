@@ -37,7 +37,7 @@
       ]
     },
     {
-      "source": "/(.*\\.(ico|png|jpg|jpeg|gif|svg|webp|avif))",
+      "source": "/static/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -71,10 +71,5 @@
       ]
     }
   ],
-  "rewrites": [
-    {
-      "source": "/admin/:path*",
-      "destination": "/admin/:path*"
-    }
-  ]
+  "rewrites": []
 }
