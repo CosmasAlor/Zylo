@@ -10,7 +10,7 @@ const RATE_LIMITS = {
   "default": { limit: 20, windowMs: 60 * 1000 }, // 20 requests per minute for other APIs
 };
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0] || 
     request.headers.get("x-real-ip") || 
     "unknown";
