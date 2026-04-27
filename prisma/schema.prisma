@@ -7,7 +7,7 @@ datasource db {
 }
 
 model Appointment {
-  id            String            @id
+  id            String            @id @default(cuid())
   fullName      String
   phone         String
   email         String?
@@ -17,11 +17,11 @@ model Appointment {
   notes         String?
   status        AppointmentStatus @default(PENDING)
   createdAt     DateTime          @default(now())
-  updatedAt     DateTime
+  updatedAt     DateTime          @updatedAt
 }
 
 model BlogPost {
-  id         String   @id
+  id         String   @id @default(cuid())
   slug       String   @unique
   title      String
   content    Json
@@ -29,7 +29,7 @@ model BlogPost {
   coverImage String?
   published  Boolean  @default(false)
   createdAt  DateTime @default(now())
-  updatedAt  DateTime
+  updatedAt  DateTime @updatedAt
 }
 
 model ContactMessage {
