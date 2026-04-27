@@ -2,7 +2,8 @@
 
 Production-oriented dental clinic platform built with Next.js App Router, TypeScript, Tailwind, Prisma, PostgreSQL, and NextAuth.
 
-![Landing Page](../../image/landing.png)
+![Landing Page](image/landing.png)
+## Tech Stack
 
 ## 🚀 Features
 
@@ -15,36 +16,6 @@ Production-oriented dental clinic platform built with Next.js App Router, TypeSc
 - **Admin Dashboard**: Complete content management system for appointments, blog, gallery
 - **Responsive Design**: Mobile-first approach with modern UI components
 
-## 🛠 Tech Stack
-
-### Core Framework
-- **Next.js 16** (App Router) - React framework with server-side rendering
-- **TypeScript** - Type-safe JavaScript
-- **Tailwind CSS 4** - Utility-first CSS framework
-- **React 19** - UI library with latest features
-
-### Backend & Database
-- **Prisma 7** - Modern ORM with type safety
-- **PostgreSQL** - Robust relational database
-- **Supabase** - Database hosting and management
-
-### Authentication & Security
-- **NextAuth v5** (Auth.js) - Authentication library
-- **bcrypt** - Password hashing
-- **CSRF Protection** - Cross-site request forgery prevention
-- **Rate Limiting** - API abuse prevention
-
-### Development Tools
-- **ESLint** - Code linting and quality checks
-- **Prettier** - Code formatting
-- **Jest** - Testing framework
-- **React Testing Library** - Component testing
-
-### UI & Forms
-- **React Hook Form** - Form management
-- **Zod** - Schema validation
-- **Radix UI** - Accessible component primitives
-- **Lucide React** - Icon library
 
 ## Setup Steps
 
