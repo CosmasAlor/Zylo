@@ -16,7 +16,11 @@ export type CreateAppointmentInput = {
 export async function createAppointment(input: CreateAppointmentInput) {
   try {
     return await db.appointment.create({
-      data: input,
+      data: {
+        id: `appt_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        ...input,
+        updatedAt: new Date(),
+      },
     });
   } catch (error) {
     throw toDatabaseError(error, "Failed to create appointment");

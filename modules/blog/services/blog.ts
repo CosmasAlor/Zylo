@@ -34,7 +34,11 @@ export async function createPost(data: {
   published?: boolean;
 }) {
   return prisma.blogPost.create({
-    data,
+    data: {
+      id: `blog_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      ...data,
+      updatedAt: new Date(),
+    },
   });
 }
 
